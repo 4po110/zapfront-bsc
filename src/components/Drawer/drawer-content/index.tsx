@@ -55,7 +55,7 @@ function NavContent() {
 
             <div className="dapp-menu-links">
                 <div className="dapp-nav">
-                    <Link
+                    {/* <Link
                         component={NavLink}
                         to="/dashboard"
                         isActive={(match: any, location: any) => {
@@ -81,7 +81,7 @@ function NavContent() {
                             <img alt="" src={StakeIcon} />
                             <p>Stake</p>
                         </div>
-                    </Link>
+                    </Link> */}
 
                     <Link
                         component={NavLink}
@@ -94,12 +94,12 @@ function NavContent() {
                     >
                         <div className="dapp-menu-item">
                             <img alt="" src={BondIcon} />
-                            <p>Mint</p>
+                            <p>Zap</p>
                         </div>
                     </Link>
 
                     <div className="bond-discounts">
-                        <p>Mint discounts</p>
+                        <p>Zap discounts</p>
                         {bonds.map((bond, i) => (
                             <Link component={NavLink} to={`/mints/${bond.name}`} key={i} className={"bond"}>
                                 {!bond.bondDiscount ? (
@@ -114,7 +114,7 @@ function NavContent() {
                         ))}
                     </div>
 
-                    <Link
+                    {/* <Link
                         component={NavLink}
                         to="/calculator"
                         isActive={(match: any, location: any) => {
@@ -126,10 +126,10 @@ function NavContent() {
                             <img alt="" src={GlobeIcon} />
                             <p>Calculator</p>
                         </div>
-                    </Link>
+                    </Link> */}
                 </div>
             </div>
-            <div className="dapp-menu-doc-link">
+            {/* <div className="dapp-menu-doc-link">
                 <Link href="https://wonderland.gitbook.io/wonderland/" target="_blank">
                     <img alt="" src={DocsIcon} />
                     <p>Docs</p>
@@ -138,7 +138,7 @@ function NavContent() {
                     <p>Legacy website</p>
                 </Link>
             </div>
-            <Social />
+            <Social /> */}
         </div>
     );
 }
