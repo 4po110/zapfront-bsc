@@ -99,16 +99,17 @@ function NavContent() {
                     </Link>
 
                     <div className="bond-discounts">
-                        <p>Zap discounts</p>
+                        <p>Zap lists</p>
                         {bonds.map((bond, i) => (
                             <Link component={NavLink} to={`/mints/${bond.name}`} key={i} className={"bond"}>
                                 {!bond.bondDiscount ? (
                                     <Skeleton variant="text" width={"150px"} />
                                 ) : (
-                                    <p>
-                                        {bond.displayName}
-                                        <span className="bond-pair-roi">{bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%</span>
-                                    </p>
+                                    <></>
+                                    // <p>
+                                    //     {bond.displayName}
+                                    //     <span className="bond-pair-roi">{bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%</span>
+                                    // </p>
                                 )}
                             </Link>
                         ))}
