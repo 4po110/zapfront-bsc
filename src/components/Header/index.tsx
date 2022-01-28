@@ -30,7 +30,7 @@ const useStyles = makeStyles(theme => ({
             easing: theme.transitions.easing.sharp,
             duration: TRANSITION_DURATION,
         }),
-        marginLeft: DRAWER_WIDTH,
+        // marginLeft: DRAWER_WIDTH,
     },
     topBarShift: {
         transition: theme.transitions.create("margin", {

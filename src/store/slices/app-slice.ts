@@ -125,7 +125,7 @@ const appSlice = createSlice({
             })
             .addCase(loadAppDetails.rejected, (state, { error }) => {
                 state.loading = false;
-                console.log(error);
+                // console.log(error);
             });
     },
 });

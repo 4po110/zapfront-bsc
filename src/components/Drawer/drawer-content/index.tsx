@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import Social from "./social";
 import StakeIcon from "../../../assets/icons/stake.svg";
 import BondIcon from "../../../assets/icons/bond.svg";
-import WonderlandIcon from "../../../assets/icons/wonderland-nav-header.svg";
+import WonderlandIcon from "../../../assets/tokens/ufx.png";
 import DashboardIcon from "../../../assets/icons/dashboard.svg";
 import { trim, shorten } from "../../../helpers";
 import { useAddress } from "../../../hooks";
@@ -37,11 +37,13 @@ function NavContent() {
         return false;
     }, []);
 
+    let style = { height: "80px", width: "80px" };
+
     return (
         <div className="dapp-sidebar">
             <div className="branding-header">
                 <Link href="https://wonderland.money" target="_blank">
-                    <img alt="" src={WonderlandIcon} />
+                    <img alt="" src={WonderlandIcon} style={style} />
                 </Link>
 
                 {address && (
@@ -86,7 +88,7 @@ function NavContent() {
                     <Link
                         component={NavLink}
                         id="bond-nav"
-                        to="/mints"
+                        to="/zap"
                         isActive={(match: any, location: any) => {
                             return checkPage(location, "mints");
                         }}
@@ -98,22 +100,21 @@ function NavContent() {
                         </div>
                     </Link>
 
-                    <div className="bond-discounts">
+                    {/* <div className="bond-discounts">
                         <p>Zap lists</p>
                         {bonds.map((bond, i) => (
-                            <Link component={NavLink} to={`/mints/${bond.name}`} key={i} className={"bond"}>
+                            <Link component={NavLink} to={`/zap/${bond.name}`} key={i} className={"bond"}>
                                 {!bond.bondDiscount ? (
                                     <Skeleton variant="text" width={"150px"} />
                                 ) : (
-                                    <></>
-                                    // <p>
-                                    //     {bond.displayName}
-                                    //     <span className="bond-pair-roi">{bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%</span>
-                                    // </p>
+                                    <p>
+                                        {bond.displayName}
+                                        <span className="bond-pair-roi">{bond.bondDiscount && trim(bond.bondDiscount * 100, 2)}%</span>
+                                    </p>
                                 )}
                             </Link>
                         ))}
-                    </div>
+                    </div> */}
 
                     {/* <Link
                         component={NavLink}

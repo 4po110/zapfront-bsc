@@ -108,30 +108,33 @@ function App() {
         <ViewBase>
             <Switch>
                 <Route exact path="/dashboard">
-                    <Dashboard />
+                    {/* <Dashboard /> */}
+                    <Route component={NotFound} />
                 </Route>
 
                 <Route exact path="/">
-                    <Redirect to="/stake" />
+                    <Redirect to="/zap" />
                 </Route>
 
                 <Route path="/stake">
-                    <Stake />
+                    {/* <Stake /> */}
+                    <Route component={NotFound} />
                 </Route>
 
-                <Route path="/mints">
-                    {bonds.map(bond => {
+                <Route path="/zap">
+                    {/* {bonds.map(bond => {
                         return (
-                            <Route exact key={bond.name} path={`/mints/${bond.name}`}>
+                            <Route exact key={bond.name} path={`/zap/${bond.name}`}>
                                 <Bond bond={bond} />
                             </Route>
                         );
-                    })}
+                    })} */}
                     <ChooseBond />
                 </Route>
 
                 <Route path="/calculator">
-                    <Calculator />
+                    {/* <Calculator /> */}
+                    <Route component={NotFound} />
                 </Route>
 
                 <Route component={NotFound} />

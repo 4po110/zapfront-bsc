@@ -13,7 +13,7 @@ function Root() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        loadTokenPrices().then(() => setLoading(false));
+        setLoading(false);
     }, []);
 
     if (loading) return <Loading />;

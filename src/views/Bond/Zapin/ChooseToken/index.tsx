@@ -10,7 +10,7 @@ import useTokens, { IAllTokenData } from "../../../../hooks/tokens";
 import { trim } from "../../../../helpers";
 import { IAllBondData } from "../../../../hooks/bonds";
 import { mim, wavax } from "../../../../helpers/bond";
-import { mim as mimToken, wavax as wavaxToken } from "../../../../helpers/tokens";
+// import { mim as mimToken, wavax as wavaxToken } from "../../../../helpers/tokens";
 
 interface IChooseTokenProps {
     open: boolean;
@@ -39,13 +39,13 @@ function ChooseToken({ open, handleClose, handleSelect, bond }: IChooseTokenProp
 
         let lpFilter = true;
 
-        if (bond.name === mim.name) {
-            lpFilter = mimToken.address !== address;
-        }
+        // if (bond.name === mim.name) {
+        //     lpFilter = mimToken.address !== address;
+        // }
 
-        if (bond.name === wavax.name) {
-            lpFilter = isAvax ? false : wavaxToken.address !== address;
-        }
+        // if (bond.name === wavax.name) {
+        //     lpFilter = isAvax ? false : wavaxToken.address !== address;
+        // }
 
         return nameTest && addressTest && lpFilter;
     });

@@ -27,7 +27,7 @@ const useStyles = makeStyles(theme => ({
         }),
         height: "100%",
         overflow: "auto",
-        marginLeft: DRAWER_WIDTH,
+        // marginLeft: DRAWER_WIDTH,
     },
     contentShift: {
         transition: theme.transitions.create("margin", {
@@ -54,14 +54,14 @@ function ViewBase({ children }: IViewBaseProps) {
         <div className="view-base-root">
             <Messages />
             <Header drawe={!isSmallerScreen} handleDrawerToggle={handleDrawerToggle} />
-            <div className={classes.drawer}>
+            {/* <div className={classes.drawer}>
                 <Hidden mdUp>
                     <MobileDrawer mobileOpen={mobileOpen} handleDrawerToggle={handleDrawerToggle} />
                 </Hidden>
                 <Hidden smDown>
                     <Drawer />
                 </Hidden>
-            </div>
+            </div> */}
             <div className={`${classes.content} ${isSmallerScreen && classes.contentShift}`}>
                 {!isSmallerScreen && (
                     <div className="cubes-top">

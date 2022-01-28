@@ -7,7 +7,7 @@ import { Skeleton } from "@material-ui/lab";
 import ChooseToken from "./ChooseToken";
 import { IAllBondData } from "../../../hooks/bonds";
 import useTokens, { IAllTokenData } from "../../../hooks/tokens";
-import { avax, mim } from "../../../helpers/tokens";
+import { usdt } from "../../../helpers/tokens";
 import { shorten, trim } from "../../../helpers";
 import BondLogo from "../../../components/BondLogo";
 import { useDispatch, useSelector } from "react-redux";
@@ -39,11 +39,11 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
         return state.pendingTransactions;
     });
 
-    let defaultToken = tokens.find(token => token.name === avax.name);
+    let defaultToken = tokens.find(token => token.name === usdt.name);
 
-    if (bond.name === wavax.name) {
-        defaultToken = tokens.find(token => token.name === mim.name);
-    }
+    // if (bond.name === wavax.name) {
+    //     defaultToken = tokens.find(token => token.name === mim.name);
+    // }
 
     const [quantity, setQuantity] = useState<string>("");
     //@ts-ignore
@@ -95,7 +95,8 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
 
     const setMax = () => {
         const maxBondPriceToken = bond.maxBondPriceToken / priceToken;
-        let amount: any = Math.min(maxBondPriceToken, token.isAvax ? token.balance * 0.99 : token.balance);
+        // let amount: any = Math.min(maxBondPriceToken, token.isAvax ? token.balance * 0.99 : token.balance);
+        let amount: any = token.balance;
 
         if (amount) {
             amount = trim(amount);
@@ -187,7 +188,7 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                 <Box className="card-content">
                     <div className="zapin-header">
                         <div className="zapin-header-token-select-wrap">
-                            <p className="zapin-header-token-select-title">Zapin & Mint</p>
+                            {/* <p className="zapin-header-token-select-title">Zap</p> */}
                             <OutlinedInput
                                 type="number"
                                 placeholder="Amount"
@@ -222,7 +223,7 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                                         await onMint();
                                     }}
                                 >
-                                    <p>{txnButtonText(pendingTransactions, "zapin_" + token.name + "_" + bond.name, "Mint")}</p>
+                                    <p>{txnButtonText(pendingTransactions, "zapin_" + token.name + "_" + bond.name, "Zap")}</p>
                                 </div>
                             ) : (
                                 <div
@@ -238,9 +239,9 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                         </div>
                         {!hasAllowance() && !token.isAvax && (
                             <div className="zapin-header-help-text">
-                                <p>Note: The "Approve" transaction is only needed when bonding for the first time</p>
-                                <p>for each token; subsequent bonding only requires you to perform the</p>
-                                <p>"zapin&mint" transaction.</p>
+                                <p>Note: The "Approve" transaction is only needed when zapping for the first time</p>
+                                <p>for each token; subsequent zapping only requires you to perform the</p>
+                                <p>"zapin" transaction.</p>
                             </div>
                         )}
                     </div>
@@ -264,7 +265,7 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                                 <p className="data-row-name">Your Balance</p>
                                 <p className="data-row-value">{`${trim(token.balance, 6)} ${token.name}`}</p>
                             </div>
-                            <div className="data-row">
+                            {/* <div className="data-row">
                                 <p className="data-row-name">Minimum Received Amount</p>
                                 <p className="data-row-value">{isLoading ? <Skeleton width="100px" /> : `${minimumReceivedAmount} ${bond.displayUnits}`}</p>
                             </div>
@@ -283,7 +284,7 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                             <div className="data-row">
                                 <p className="data-row-name">Minimum purchase</p>
                                 <p className="data-row-value">0.01 TIME</p>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                     <ChooseToken open={chooseTokenOpen} handleClose={handleChooseTokenClose} handleSelect={handleChooseTokenSelect} bond={bond} />

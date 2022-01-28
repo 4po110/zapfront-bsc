@@ -2,6 +2,7 @@ import { useSelector } from "react-redux";
 import { Paper, Grid, Box, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Zoom } from "@material-ui/core";
 import { BondTableData, BondDataCard } from "./BondRow";
 import useMediaQuery from "@material-ui/core/useMediaQuery";
+import { changeApproval, bondAsset, calcBondDetails } from "../../store/slices/bond-slice";
 import { trim } from "../../helpers";
 import useBonds from "../../hooks/bonds";
 import "./choosebond.scss";

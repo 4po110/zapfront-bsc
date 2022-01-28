@@ -9,7 +9,7 @@ function BondLogo({ bond }: IBondLogoProps) {
     let style = { height: "32px", width: "32px" };
 
     if (bond.isLP) {
-        style = { height: "30px", width: "62px" };
+        style = { height: "32px", width: "58px" };
     }
 
     return (
