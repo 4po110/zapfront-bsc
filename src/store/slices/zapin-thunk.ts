@@ -201,7 +201,7 @@ export const zapinMint = createAsyncThunk("zapin/zapinMint", async ({ provider, 
     console.log(path1);
     console.log(path2);
     console.log(timestamp);
-    zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, 0, timestamp, { gasPrice });
+    zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, timestamp, { gasPrice });
     console.log(zapinTx);
     dispatch(
         fetchPendingTxns({
