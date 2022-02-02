@@ -70,7 +70,7 @@ export const ufxBNB = new LPBond({
     networkAddrs: {
         [Networks.AVAX]: {
             bondAddress: "0xA184AE1A71EcAD20E822cB965b99c287590c4FFe",
-            reserveAddress: "0x99223b5191C5E8b174e17Bbe1C96a39E46e81e0a",
+            reserveAddress: "0xd8d18a4045adadec926e0a3c289e22850993ca7b",
         },
     },
     lpUrl: "https://bscscan.com/token/0xd8d18a4045adadec926e0a3c289e22850993ca7b",
@@ -86,7 +86,7 @@ export const ufxUFGAIN = new LPBond({
     networkAddrs: {
         [Networks.AVAX]: {
             bondAddress: "0xA184AE1A71EcAD20E822cB965b99c287590c4FFe",
-            reserveAddress: "0xaBF1C59d494dA08E8c6817d300D02BC9e95DE281",
+            reserveAddress: "0xcc6a01db54d19e07626bae15dcf870107fbb7d0e",
         },
     },
     lpUrl: "https://bscscan.com/token/0xcc6a01db54d19e07626bae15dcf870107fbb7d0e",
@@ -102,7 +102,7 @@ export const ufgrainBNB = new LPBond({
     networkAddrs: {
         [Networks.AVAX]: {
             bondAddress: "0xA184AE1A71EcAD20E822cB965b99c287590c4FFe",
-            reserveAddress: "0x06f996657e5da6655ddD96333376bA8B83483926",
+            reserveAddress: "0x27b56c126bff4c7f952746557752d8de28bca7ec",
         },
     },
     lpUrl: "https://bscscan.com/token/0x27b56c126bff4c7f952746557752d8de28bca7ec",

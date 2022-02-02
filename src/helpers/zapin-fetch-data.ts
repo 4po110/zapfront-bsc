@@ -33,10 +33,6 @@ export const zapinLpData = async (bond: IAllBondData, token: IToken, tokenAmmoun
 
     const { _swapTarget, swapData } = zapinInterface.decodeFunctionData("ZapIn", data.data);
 
-    console.log(_swapTarget);
-    console.log(swapData);
-    console.log("_swapTarget, swapData");
-
     return [_swapTarget, swapData, data.minTokens];
 };
 

@@ -3,18 +3,15 @@
         {
             "inputs": [
                 {
-                    "internalType": "uint256",
-                    "name": "_goodwill",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_affiliateSplit",
-                    "type": "uint256"
+                    "internalType": "address payable",
+                    "name": "recipient",
+                    "type": "address"
                 }
             ],
+            "name": "BNBWithdraw",
+            "outputs": [],
             "stateMutability": "nonpayable",
-            "type": "constructor"
+            "type": "function"
         },
         {
             "anonymous": false,
@@ -36,210 +33,6 @@
             "type": "event"
         },
         {
-            "anonymous": false,
-            "inputs": [
-                {
-                    "indexed": false,
-                    "internalType": "address",
-                    "name": "sender",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "address",
-                    "name": "pool",
-                    "type": "address"
-                },
-                {
-                    "indexed": false,
-                    "internalType": "uint256",
-                    "name": "tokensRec",
-                    "type": "uint256"
-                }
-            ],
-            "name": "zapIn",
-            "type": "event"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "_FromTokenContractAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "address",
-                    "name": "_pairAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_amount",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_minPoolTokens",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "address",
-                    "name": "_swapTarget",
-                    "type": "address"
-                },
-                {
-                    "internalType": "bytes",
-                    "name": "swapData",
-                    "type": "bytes"
-                },
-                {
-                    "internalType": "address",
-                    "name": "affiliate",
-                    "type": "address"
-                },
-                {
-                    "internalType": "bool",
-                    "name": "transferResidual",
-                    "type": "bool"
-                },
-                {
-                    "internalType": "bool",
-                    "name": "shouldSellEntireBalance",
-                    "type": "bool"
-                }
-            ],
-            "name": "ZapIn",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "payable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                },
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "affiliateBalance",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "affiliates",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address[]",
-                    "name": "tokens",
-                    "type": "address[]"
-                }
-            ],
-            "name": "affilliateWithdraw",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "approvedTargets",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "feeWhitelist",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "goodwill",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "owner",
-            "outputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
             "inputs": [],
             "name": "renounceOwnership",
             "outputs": [],
@@ -249,120 +42,19 @@
         {
             "inputs": [
                 {
-                    "internalType": "address[]",
-                    "name": "targets",
-                    "type": "address[]"
-                },
-                {
-                    "internalType": "bool[]",
-                    "name": "isApproved",
-                    "type": "bool[]"
-                }
-            ],
-            "name": "setApprovedTargets",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
                     "internalType": "address",
-                    "name": "_affiliate",
+                    "name": "_token",
                     "type": "address"
                 },
                 {
-                    "internalType": "bool",
-                    "name": "_status",
-                    "type": "bool"
-                }
-            ],
-            "name": "set_affiliate",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "zapAddress",
-                    "type": "address"
-                },
-                {
-                    "internalType": "bool",
-                    "name": "status",
-                    "type": "bool"
-                }
-            ],
-            "name": "set_feeWhitelist",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
                     "internalType": "uint256",
-                    "name": "_new_affiliateSplit",
+                    "name": "_amount",
                     "type": "uint256"
                 }
             ],
-            "name": "set_new_affiliateSplit",
+            "name": "TokenWithdraw",
             "outputs": [],
             "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "_new_goodwill",
-                    "type": "uint256"
-                }
-            ],
-            "name": "set_new_goodwill",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "stopped",
-            "outputs": [
-                {
-                    "internalType": "bool",
-                    "name": "",
-                    "type": "bool"
-                }
-            ],
-            "stateMutability": "view",
-            "type": "function"
-        },
-        {
-            "inputs": [],
-            "name": "toggleContractActive",
-            "outputs": [],
-            "stateMutability": "nonpayable",
-            "type": "function"
-        },
-        {
-            "inputs": [
-                {
-                    "internalType": "address",
-                    "name": "",
-                    "type": "address"
-                }
-            ],
-            "name": "totalAffiliateBalance",
-            "outputs": [
-                {
-                    "internalType": "uint256",
-                    "name": "",
-                    "type": "uint256"
-                }
-            ],
-            "stateMutability": "view",
             "type": "function"
         },
         {
@@ -381,12 +73,42 @@
         {
             "inputs": [
                 {
+                    "internalType": "address",
+                    "name": "_token",
+                    "type": "address"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "_amount0",
+                    "type": "uint256"
+                },
+                {
                     "internalType": "address[]",
-                    "name": "tokens",
+                    "name": "path",
                     "type": "address[]"
+                },
+                {
+                    "internalType": "address[]",
+                    "name": "path1",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "address[]",
+                    "name": "path2",
+                    "type": "address[]"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "test",
+                    "type": "uint256"
+                },
+                {
+                    "internalType": "uint256",
+                    "name": "deadline",
+                    "type": "uint256"
                 }
             ],
-            "name": "withdrawTokens",
+            "name": "Zapin",
             "outputs": [],
             "stateMutability": "nonpayable",
             "type": "function"
@@ -394,6 +116,19 @@
         {
             "stateMutability": "payable",
             "type": "receive"
+        },
+        {
+            "inputs": [],
+            "name": "owner",
+            "outputs": [
+                {
+                    "internalType": "address",
+                    "name": "",
+                    "type": "address"
+                }
+            ],
+            "stateMutability": "view",
+            "type": "function"
         }
     ]
 }

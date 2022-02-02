@@ -340,7 +340,7 @@ export const usdt: IToken = {
     name: "USDT",
     address: "0x55d398326f99059ff775485246999027b3197955",
     img: UsdtEIcon,
-    decimals: 6,
+    decimals: 18,
 };
 
 // const vso: IToken = {

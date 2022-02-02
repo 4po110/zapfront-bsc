@@ -148,97 +148,90 @@ interface IZapinMint {
     bond: IAllBondData;
     token: IToken;
     value: string;
-    minReturnAmount: string;
-    swapTarget: string;
-    swapData: string;
     slippage: number;
     address: string;
 }
 
-export const zapinMint = createAsyncThunk(
-    "zapin/zapinMint",
-    async ({ provider, networkID, bond, token, value, minReturnAmount, swapTarget, swapData, slippage, address }: IZapinMint, { dispatch }) => {
-        if (!provider) {
-            dispatch(warning({ text: messages.please_connect_wallet }));
-            return;
+export const zapinMint = createAsyncThunk("zapin/zapinMint", async ({ provider, networkID, bond, token, value, slippage, address }: IZapinMint, { dispatch }) => {
+    if (!provider) {
+        dispatch(warning({ text: messages.please_connect_wallet }));
+        return;
+    }
+    const acceptedSlippage = slippage / 100 || 0.02;
+    const addresses = getAddresses(networkID);
+    // const depositorAddress = address;
+
+    const signer = provider.getSigner();
+    const zapinContract = new ethers.Contract(addresses.ZAPIN_ADDRESS, ZapinContract, signer);
+
+    const bondAddress = bond.getAddressForReserve(networkID);
+    const valueInWei = trim(Number(value) * Math.pow(10, token.decimals));
+
+    const bondContract = bond.getContractForBond(networkID, signer);
+
+    const currentDate = new Date();
+    const timestamp = (currentDate.getTime() / 1000).toFixed() + 100000;
+
+    // const calculatePremium = await bondContract.bondPrice();
+    // const maxPremium = Math.round(calculatePremium * (1 + acceptedSlippage));
+
+    const path = [token.address, "0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c"];
+    let path1, path2;
+
+    if (bondAddress == "0xd8d18a4045adadec926e0a3c289e22850993ca7b") {
+        path1 = ["0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", "0x44b3efa6c6ca47badb3197b0ab675e4396e40023"];
+        path2 = [];
+    }
+
+    if (bondAddress == "0xcc6a01db54d19e07626bae15dcf870107fbb7d0e") {
+        path1 = ["0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", "0x44b3efa6c6ca47badb3197b0ab675e4396e40023"];
+        path2 = ["0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", "0x6aa5927e752b54bb4809d616a52af52b650fc731"];
+    }
+
+    if (bondAddress == "0x27b56c126bff4c7f952746557752d8de28bca7ec") {
+        path1 = ["0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", "0x6aa5927e752b54bb4809d616a52af52b650fc731"];
+        path2 = [];
+    }
+
+    let zapinTx;
+    const gasPrice = await getGasPrice(provider);
+    console.log(token.address);
+    console.log(valueInWei);
+    console.log(path);
+    console.log(path1);
+    console.log(path2);
+    console.log(timestamp);
+    zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, 0, timestamp, { gasPrice });
+    console.log(zapinTx);
+    dispatch(
+        fetchPendingTxns({
+            txnHash: zapinTx.hash,
+            text: "Zapin " + token.name,
+            type: "zapin_" + token.name + "_" + bond.name,
+        }),
+    );
+    await zapinTx.wait();
+    try {
+        // dispatch(
+        //     fetchPendingTxns({
+        //         txnHash: zapinTx.hash,
+        //         text: "Zapin " + token.name,
+        //         type: "zapin_" + token.name + "_" + bond.name,
+        //     }),
+        // );
+        // await zapinTx.wait();
+        dispatch(success({ text: messages.tx_successfully_send }));
+        await sleep(0.01);
+        dispatch(info({ text: messages.your_balance_update_soon }));
+        await sleep(10);
+        await dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
+        dispatch(info({ text: messages.your_balance_updated }));
+        return;
+    } catch (err) {
+        return metamaskErrorWrap(err, dispatch);
+    } finally {
+        if (zapinTx) {
+            dispatch(clearPendingTxn(zapinTx.hash));
         }
-        const acceptedSlippage = slippage / 100 || 0.02;
-        const addresses = getAddresses(networkID);
-        const depositorAddress = address;
-
-        const signer = provider.getSigner();
-        const zapinContract = new ethers.Contract(addresses.ZAPIN_ADDRESS, ZapinContract, signer);
-
-        const bondAddress = bond.getAddressForBond(networkID);
-        const valueInWei = trim(Number(value) * Math.pow(10, token.decimals));
-
-        const bondContract = bond.getContractForBond(networkID, signer);
-
-        const calculatePremium = await bondContract.bondPrice();
-        const maxPremium = Math.round(calculatePremium * (1 + acceptedSlippage));
-
-        let zapinTx;
-        try {
-            const gasPrice = await getGasPrice(provider);
-
-            if (bond.isLP) {
-                if (token.isAvax) {
-                    zapinTx = await zapinContract.ZapInLp(
-                        ethers.constants.AddressZero,
-                        bondAddress,
-                        valueInWei,
-                        minReturnAmount,
-                        swapTarget,
-                        swapData,
-                        true,
-                        maxPremium,
-                        depositorAddress,
-                        { value: valueInWei, gasPrice },
-                    );
-                } else {
-                    zapinTx = await zapinContract.ZapInLp(token.address, bondAddress, valueInWei, minReturnAmount, swapTarget, swapData, true, maxPremium, depositorAddress, {
-                        gasPrice,
-                    });
-                }
-            } else {
-                if (token.isAvax) {
-                    zapinTx = await zapinContract.ZapIn(
-                        ethers.constants.AddressZero,
-                        bondAddress,
-                        valueInWei,
-                        minReturnAmount,
-                        swapTarget,
-                        swapData,
-                        maxPremium,
-                        depositorAddress,
-                        { value: valueInWei, gasPrice },
-                    );
-                } else {
-                    zapinTx = await zapinContract.ZapIn(token.address, bondAddress, valueInWei, minReturnAmount, swapTarget, swapData, maxPremium, depositorAddress, { gasPrice });
-                }
-            }
-
-            dispatch(
-                fetchPendingTxns({
-                    txnHash: zapinTx.hash,
-                    text: "Zapin " + token.name,
-                    type: "zapin_" + token.name + "_" + bond.name,
-                }),
-            );
-            await zapinTx.wait();
-            dispatch(success({ text: messages.tx_successfully_send }));
-            await sleep(0.01);
-            dispatch(info({ text: messages.your_balance_update_soon }));
-            await sleep(10);
-            await dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
-            dispatch(info({ text: messages.your_balance_updated }));
-            return;
-        } catch (err) {
-            return metamaskErrorWrap(err, dispatch);
-        } finally {
-            if (zapinTx) {
-                dispatch(clearPendingTxn(zapinTx.hash));
-            }
-        }
-    },
-);
+    }
+});

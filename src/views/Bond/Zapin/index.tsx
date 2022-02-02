@@ -69,24 +69,11 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
     const onMint = async () => {
         if (await checkWrongNetwork()) return;
 
-        if (!swapInfo.amount || !swapInfo.swapData || !swapInfo.swapTarget || swapInfo.value !== quantity) {
-            return dispatch(warning({ text: messages.something_wrong }));
-        }
+        // if (!swapInfo.amount || !swapInfo.swapData || !swapInfo.swapTarget || swapInfo.value !== quantity) {
+        //     return dispatch(warning({ text: messages.something_wrong }));
+        // }
 
-        dispatch(
-            zapinMint({
-                provider,
-                networkID: chainID,
-                bond,
-                token,
-                value: quantity,
-                minReturnAmount: swapInfo.amount,
-                swapTarget: swapInfo.swapTarget,
-                swapData: swapInfo.swapData,
-                slippage,
-                address,
-            }),
-        );
+        dispatch(zapinMint({ provider, networkID: chainID, bond, token, value: quantity, slippage, address }));
     };
 
     const onSlippageChange = (value: any) => {
