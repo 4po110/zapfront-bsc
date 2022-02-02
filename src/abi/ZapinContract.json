@@ -45,11 +45,6 @@
                     "internalType": "address",
                     "name": "_token",
                     "type": "address"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "_amount",
-                    "type": "uint256"
                 }
             ],
             "name": "TokenWithdraw",
@@ -84,27 +79,22 @@
                 },
                 {
                     "internalType": "address[]",
-                    "name": "path",
+                    "name": "_path",
                     "type": "address[]"
                 },
                 {
                     "internalType": "address[]",
-                    "name": "path1",
+                    "name": "_path1",
                     "type": "address[]"
                 },
                 {
                     "internalType": "address[]",
-                    "name": "path2",
+                    "name": "_path2",
                     "type": "address[]"
                 },
                 {
                     "internalType": "uint256",
-                    "name": "test",
-                    "type": "uint256"
-                },
-                {
-                    "internalType": "uint256",
-                    "name": "deadline",
+                    "name": "_deadline",
                     "type": "uint256"
                 }
             ],
