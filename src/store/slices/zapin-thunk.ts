@@ -201,31 +201,23 @@ export const zapinMint = createAsyncThunk("zapin/zapinMint", async ({ provider, 
     console.log(path1);
     console.log(path2);
     console.log(timestamp);
-    zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, timestamp, { gasPrice });
-    console.log(zapinTx);
-    dispatch(
-        fetchPendingTxns({
-            txnHash: zapinTx.hash,
-            text: "Zapin " + token.name,
-            type: "zapin_" + token.name + "_" + bond.name,
-        }),
-    );
-    await zapinTx.wait();
     try {
-        // dispatch(
-        //     fetchPendingTxns({
-        //         txnHash: zapinTx.hash,
-        //         text: "Zapin " + token.name,
-        //         type: "zapin_" + token.name + "_" + bond.name,
-        //     }),
-        // );
-        // await zapinTx.wait();
+        zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, 61, timestamp);
+        console.log(zapinTx);
+        dispatch(
+            fetchPendingTxns({
+                txnHash: zapinTx.hash,
+                text: "Zapin " + token.name,
+                type: "zapin_" + token.name + "_" + bond.name,
+            }),
+        );
+        await zapinTx.wait();
         dispatch(success({ text: messages.tx_successfully_send }));
         await sleep(0.01);
-        dispatch(info({ text: messages.your_balance_update_soon }));
+        // dispatch(info({ text: messages.your_balance_update_soon }));
         await sleep(10);
         await dispatch(calculateUserBondDetails({ address, bond, networkID, provider }));
-        dispatch(info({ text: messages.your_balance_updated }));
+        // dispatch(info({ text: messages.your_balance_updated }));
         return;
     } catch (err) {
         return metamaskErrorWrap(err, dispatch);
