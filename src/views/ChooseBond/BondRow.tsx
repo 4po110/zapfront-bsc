@@ -45,7 +45,7 @@ export function BondDataCard({ bond }: IBondProps) {
                         </div>
                     </div>
 
-                    <div className="data-row">
+                    {/* <div className="data-row">
                         <p className="bond-name-title">Price</p>
                         <p className="bond-price bond-name-title">
                             <>
@@ -73,7 +73,7 @@ export function BondDataCard({ bond }: IBondProps) {
                                 }).format(bond.purchased)
                             )}
                         </p>
-                    </div>
+                    </div> */}
                     {/* <Link component={NavLink} to={`/zap/${bond.name}`}> */}
                     <div className="bond-table-btn" onClick={handleZapinOpen}>
                         <p>Zap {bond.displayName}</p>

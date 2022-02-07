@@ -18,12 +18,13 @@ function ConnectMenu() {
 
     let buttonText = "Connect Wallet";
     let linkHref = "https://app.unitedfarmers.finance";
-    let linkText = "Return";
+    let linkText = "Return to app";
     let clickFunc: any = connect;
     let buttonStyle = {};
     let linkStyle = {
-        backgroundColor: "rgb(89, 67, 67)",
+        // backgroundColor: "rgb(89, 67, 67)",
         marginRight: 15,
+        textDecoration: "none",
     };
 
     if (isConnected) {
@@ -50,7 +51,7 @@ function ConnectMenu() {
 
     return (
         <>
-            <a className="connect-button" style={linkStyle} href={linkHref} target="_blink">
+            <a className="connect-button" style={linkStyle} href={linkHref}>
                 <p>{linkText}</p>
             </a>
             <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
