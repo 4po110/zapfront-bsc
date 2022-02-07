@@ -37,7 +37,7 @@ export const changeApproval = createAsyncThunk("zapin/changeApproval", async ({ 
     try {
         const gasPrice = await getGasPrice(provider);
 
-        approveTx = await tokenContract.approve(addresses.ZAPIN_ADDRESS, ethers.constants.MaxUint256, { gasPrice });
+        approveTx = await tokenContract.approve("0x83896c22ff6616C33b51e9DD0cf0B8032624c3c6", ethers.constants.MaxUint256, { gasPrice });
 
         const text = "Approve " + token.name;
         const pendingTxnType = "approve_" + token.address;
@@ -55,7 +55,7 @@ export const changeApproval = createAsyncThunk("zapin/changeApproval", async ({ 
 
     await sleep(2);
 
-    const tokenAllowance = await tokenContract.allowance(address, addresses.ZAPIN_ADDRESS);
+    const tokenAllowance = await tokenContract.allowance(address, "0x83896c22ff6616C33b51e9DD0cf0B8032624c3c6");
 
     return dispatch(
         fetchAccountSuccess({
@@ -162,7 +162,7 @@ export const zapinMint = createAsyncThunk("zapin/zapinMint", async ({ provider, 
     // const depositorAddress = address;
 
     const signer = provider.getSigner();
-    const zapinContract = new ethers.Contract(addresses.ZAPIN_ADDRESS, ZapinContract, signer);
+    const zapinContract = new ethers.Contract("0x83896c22ff6616C33b51e9DD0cf0B8032624c3c6", ZapinContract, signer);
 
     const bondAddress = bond.getAddressForReserve(networkID);
     const valueInWei = trim(Number(value) * Math.pow(10, token.decimals));
@@ -195,15 +195,8 @@ export const zapinMint = createAsyncThunk("zapin/zapinMint", async ({ provider, 
 
     let zapinTx;
     const gasPrice = await getGasPrice(provider);
-    console.log(token.address);
-    console.log(valueInWei);
-    console.log(path);
-    console.log(path1);
-    console.log(path2);
-    console.log(timestamp);
     try {
         zapinTx = await zapinContract.Zapin(token.address, valueInWei, path, path1, path2, 61, timestamp);
-        console.log(zapinTx);
         dispatch(
             fetchPendingTxns({
                 txnHash: zapinTx.hash,

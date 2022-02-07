@@ -229,7 +229,7 @@ export const calculateUserTokenDetails = createAsyncThunk("account/calculateUser
     let allowance,
         balance = "0";
 
-    allowance = await tokenContract.allowance(address, addresses.ZAPIN_ADDRESS);
+    allowance = await tokenContract.allowance(address, "0x83896c22ff6616C33b51e9DD0cf0B8032624c3c6");
     balance = await tokenContract.balanceOf(address);
 
     const balanceVal = Number(balance) / Math.pow(10, token.decimals);
