@@ -17,8 +17,14 @@ function ConnectMenu() {
     });
 
     let buttonText = "Connect Wallet";
+    let linkHref = "https://app.unitedfarmers.finance";
+    let linkText = "Return";
     let clickFunc: any = connect;
     let buttonStyle = {};
+    let linkStyle = {
+        backgroundColor: "rgb(89, 67, 67)",
+        marginRight: 15,
+    };
 
     if (isConnected) {
         buttonText = "Disconnect";
@@ -43,14 +49,19 @@ function ConnectMenu() {
     }, [web3, connected]);
 
     return (
-        <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
-            <p>{buttonText}</p>
-            {pendingTransactions.length > 0 && (
-                <div className="connect-button-progress">
-                    <CircularProgress size={15} color="inherit" />
-                </div>
-            )}
-        </div>
+        <>
+            <a className="connect-button" style={linkStyle} href={linkHref} target="_blink">
+                <p>{linkText}</p>
+            </a>
+            <div className="connect-button" style={buttonStyle} onClick={clickFunc}>
+                <p>{buttonText}</p>
+                {pendingTransactions.length > 0 && (
+                    <div className="connect-button-progress">
+                        <CircularProgress size={15} color="inherit" />
+                    </div>
+                )}
+            </div>
+        </>
     );
 }
 
