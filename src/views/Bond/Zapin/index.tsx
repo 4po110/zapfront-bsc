@@ -12,7 +12,7 @@ import { shorten, trim } from "../../../helpers";
 import BondLogo from "../../../components/BondLogo";
 import { useDispatch, useSelector } from "react-redux";
 import { IReduxState } from "../../../store/slices/state.interface";
-import { changeApproval, calcZapinDetails, ITokenZapinResponse, zapinMint } from "../../../store/slices/zapin-thunk";
+import { changeApproval, calcZapinDetails, ITokenZapinResponse, zapinMint, lpTokenDetails } from "../../../store/slices/zapin-thunk";
 import { IPendingTxn, isPendingTxn, txnButtonText } from "../../../store/slices/pending-txns-slice";
 import { useWeb3Context } from "../../../hooks";
 import { wavax } from "../../../helpers/bond";
@@ -51,6 +51,7 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
     const [chooseTokenOpen, setChooseTokenOpen] = useState(false);
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [slippage, setSlippage] = useState(2);
+    const [rAmount, setRAmount] = useState(0);
     const [swapInfo, setSwapInfo] = useState<ITokenZapinResponse>({ swapData: "", swapTarget: "", amount: "", value: "0" });
     const [priceToken, setPriceToken] = useState<number>(0);
 
@@ -78,6 +79,10 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
 
     const onSlippageChange = (value: any) => {
         return setSlippage(value);
+    };
+
+    const onRAmountChange = (value: any) => {
+        return setRAmount(value);
     };
 
     const setMax = () => {
@@ -128,6 +133,13 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
             }
         }, 500);
     }, [token, slippage]);
+
+    useEffect(() => {
+        setTimeout(async () => {
+            const { receivedAmount } = await lpTokenDetails({ provider, token, networkID: chainID, bond, value: quantity });
+            onRAmountChange(receivedAmount);
+        }, 500);
+    }, [quantity]);
 
     let minimumReceivedAmount = "0";
 
@@ -252,11 +264,11 @@ function Zapin({ open, handleClose, bond }: IZapinProps) {
                                 <p className="data-row-name">Your Balance</p>
                                 <p className="data-row-value">{`${trim(token.balance, 6)} ${token.name}`}</p>
                             </div>
-                            {/* <div className="data-row">
-                                <p className="data-row-name">Minimum Received Amount</p>
-                                <p className="data-row-value">{isLoading ? <Skeleton width="100px" /> : `${minimumReceivedAmount} ${bond.displayUnits}`}</p>
-                            </div>
                             <div className="data-row">
+                                <p className="data-row-name">Expected Amount to Receive</p>
+                                <p className="data-row-value">{isLoading ? <Skeleton width="100px" /> : `${rAmount} ${bond.displayUnits}`}</p>
+                            </div>
+                            {/*<div className="data-row">
                                 <p className="data-row-name">Approximately you will get</p>
                                 <p className="data-row-value">{isLoading ? <Skeleton width="100px" /> : `~ ${trim(bond.bondQuote, 4)} TIME`}</p>
                             </div>

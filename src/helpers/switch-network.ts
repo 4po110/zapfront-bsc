@@ -14,7 +14,7 @@ const addChainRequest = () => {
             {
                 chainId: "0x38",
                 chainName: "BSC Mainnet",
-                rpcUrls: ["https://bsc-dataseed1.defibit.io/"],
+                rpcUrls: ["https://bsc-dataseed1.ninicoin.io/"],
                 blockExplorerUrls: ["https://bscscan.com//"],
                 nativeCurrency: {
                     name: "BNB",

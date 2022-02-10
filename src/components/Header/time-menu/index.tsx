@@ -51,27 +51,30 @@ function TimeMenu() {
     return (
         <div className="time-menu-root" onMouseEnter={e => handleClick(e)} onMouseLeave={e => handleClick(e)}>
             <div className="time-menu-btn">
-                <p>TIME</p>
+                <p>Add LP token</p>
             </div>
 
             <Popper className="time-menu-popper" open={open} anchorEl={anchorEl} transition>
                 {({ TransitionProps }) => (
                     <Fade {...TransitionProps} timeout={200}>
                         <div className="tooltip">
-                            <Link className="tooltip-item" href={`https://www.traderjoexyz.com/#/trade?inputCurrency=&outputCurrency=${TIME_ADDRESS}`} target="_blank">
+                            {/* <Link className="tooltip-item" href={`https://www.traderjoexyz.com/#/trade?inputCurrency=&outputCurrency=${TIME_ADDRESS}`} target="_blank">
                                 <p>Buy on Trader Joe</p>
-                            </Link>
+                            </Link> */}
 
                             {isEthereumAPIAvailable && (
                                 <div className="add-tokens">
-                                    <div className="divider" />
+                                    {/* <div className="divider" />
                                     <p className="add-tokens-title">ADD TOKEN TO WALLET</p>
-                                    <div className="divider" />
-                                    <div className="tooltip-item" onClick={addTokenToWallet("TIME", TIME_ADDRESS)}>
-                                        <p>TIME</p>
+                                    <div className="divider" /> */}
+                                    <div className="tooltip-item" onClick={addTokenToWallet("UFX_BNB", "0xd8d18a4045adadec926e0a3c289e22850993ca7b")}>
+                                        <p>UFX-BNB</p>
                                     </div>
-                                    <div className="tooltip-item" onClick={addTokenToWallet("MEMO", MEMO_ADDRESS)}>
-                                        <p>MEMO</p>
+                                    <div className="tooltip-item" onClick={addTokenToWallet("UFX_UFGRAIN", "0xcc6a01db54d19e07626bae15dcf870107fbb7d0e")}>
+                                        <p>UFX-UFGRAIN</p>
+                                    </div>
+                                    <div className="tooltip-item" onClick={addTokenToWallet("UFGRAIN_BNB", "0x27b56c126bff4c7f952746557752d8de28bca7ec")}>
+                                        <p>UFGRAIN-BNB</p>
                                     </div>
                                 </div>
                             )}

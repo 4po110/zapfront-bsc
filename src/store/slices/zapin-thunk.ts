@@ -8,12 +8,13 @@ import { clearPendingTxn, fetchPendingTxns } from "./pending-txns-slice";
 import { metamaskErrorWrap } from "../../helpers/metamask-error-wrap";
 import { getGasPrice } from "../../helpers/get-gas-price";
 import { ethers } from "ethers";
-import { MimTokenContract, ZapinContract } from "../../abi";
+import { MimTokenContract, ZapinContract, UFXLpContract, FactoryContract, PancakeLpContract, RouterContract } from "../../abi";
 import { calculateUserBondDetails, fetchAccountSuccess } from "./account-slice";
 import { IAllBondData } from "../../hooks/bonds";
 import { zapinData, zapinLpData } from "../../helpers/zapin-fetch-data";
 import { trim } from "../../helpers/trim";
 import { sleep } from "../../helpers";
+import _ from "lodash";
 
 interface IChangeApproval {
     token: IToken;
@@ -77,7 +78,6 @@ interface ITokenZapin {
     value: string;
     dispatch: Dispatch<any>;
 }
-
 export interface ITokenZapinResponse {
     swapTarget: string;
     swapData: string;
@@ -139,6 +139,62 @@ export const calcZapinDetails = async ({ token, provider, networkID, bond, value
         swapData,
         amount,
         value,
+    };
+};
+
+interface ILpToken {
+    provider: JsonRpcProvider;
+    token: IToken;
+    networkID: Networks;
+    bond: IAllBondData;
+    value: string;
+}
+
+interface ILpTokenResponse {
+    receivedAmount: number;
+}
+
+export const lpTokenDetails = async ({ provider, token, networkID, bond, value }: ILpToken): Promise<ILpTokenResponse> => {
+    let _reserve0;
+    let _reserve1;
+    let token0;
+    let token1;
+    let totalSupply;
+    let tokenAmount;
+    const pancakeFactory = new ethers.Contract("0xcA143Ce32Fe78f1f7019d7d551a6402fC5350c73", FactoryContract, provider);
+    const pairBNBAddress = await pancakeFactory.getPair("0xbb4CdB9CBd36B01bD1cBaEBF2De08d9173bc095c", token.address);
+    const pairBNBContact = new ethers.Contract(pairBNBAddress, PancakeLpContract, provider);
+    token0 = await pairBNBContact.token0();
+    token1 = await pairBNBContact.token1();
+    [_reserve0, _reserve1] = await pairBNBContact.getReserves();
+    if (_reserve0 * 1 < _reserve1 * 1) {
+        tokenAmount = (_reserve0 / _reserve1) * Number(value) * Math.pow(10, token.decimals);
+    } else {
+        tokenAmount = (_reserve1 / _reserve0) * Number(value) * Math.pow(10, token.decimals);
+    }
+
+    const lpContract = new ethers.Contract(bond.getAddressForReserve(networkID), UFXLpContract, provider);
+    token0 = await lpContract.token0();
+    token1 = await lpContract.token1();
+
+    let receivedAmount;
+
+    [_reserve0, _reserve1] = await lpContract.getReserves();
+    totalSupply = await lpContract.totalSupply();
+
+    if (token0.toLowerCase() == "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c") {
+        receivedAmount = (totalSupply * tokenAmount * 9) / _reserve0 / Math.pow(10, 18) / 20.78;
+    } else if (token1.toLowerCase() == "0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c") {
+        receivedAmount = (totalSupply * tokenAmount * 9) / _reserve1 / Math.pow(10, 18) / 20.78;
+    } else {
+        const routerContract = new ethers.Contract("0xad02320a81606fbB760C32e065495A8ddbf322A8", RouterContract, provider);
+        tokenAmount = Math.round(tokenAmount * 0.45);
+        [, receivedAmount] = await routerContract.getAmountsOut(tokenAmount.toString(), ["0xbb4cdb9cbd36b01bd1cbaebf2de08d9173bc095c", token0]);
+        receivedAmount = (totalSupply * receivedAmount) / _reserve0 / Math.pow(10, 18) / 1.039;
+    }
+
+    return {
+        receivedAmount,
     };
 };
 
